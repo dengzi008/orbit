@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命之花2.0</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Sans SC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #000000;
+            background-image: 
+                /* 远处星云 - 营造深度感 */
+                radial-gradient(ellipse 800px 600px at 15% 20%, rgba(75, 0, 130, 0.25) 0%, transparent 60%),
+                radial-gradient(ellipse 600px 800px at 85% 80%, rgba(25, 25, 112, 0.2) 0%, transparent 60%),
+                /* 中距离星团 */
+                radial-gradient(ellipse 400px 300px at 50% 50%, rgba(138, 43, 226, 0.15) 0%, transparent 70%),
+                radial-gradient(ellipse 300px 400px at 30% 70%, rgba(0, 191, 255, 0.12) 0%, transparent 65%),
+                /* 近处光晕 */
+                radial-gradient(circle 200px at 20% 30%, rgba(138, 43, 226, 0.1) 0%, transparent 50%),
+                radial-gradient(circle 200px at 80% 70%, rgba(0, 191, 255, 0.08) 0%, transparent 50%),
+                radial-gradient(circle 150px at 50% 50%, rgba(255, 215, 0, 0.06) 0%, transparent 60%),
+                /* 基础渐变 */
+                radial-gradient(ellipse at top, rgba(26, 26, 46, 0.8) 0%, #000000 50%),
+                radial-gradient(ellipse at bottom, rgba(22, 33, 62, 0.6) 0%, #000000 50%);
+            background-size: 100% 100%;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            color: #e0e0e0;
+        }
+
+        /* 星星背景 - 多层深度效果 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* 远处小星星 - 营造深度 */
+            background-image: 
+                radial-gradient(1px 1px at 20% 30%, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(1px 1px at 60% 70%, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(1px 1px at 50% 50%, rgba(255, 255, 255, 0.9), transparent),
+                radial-gradient(1px 1px at 80% 10%, rgba(255, 255, 255, 0.7), transparent),
+                radial-gradient(1px 1px at 40% 80%, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(1px 1px at 10% 60%, rgba(255, 255, 255, 0.9), transparent),
+                radial-gradient(1px 1px at 90% 40%, rgba(255, 255, 255, 0.7), transparent),
+                radial-gradient(1px 1px at 30% 20%, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(1px 1px at 70% 90%, rgba(255, 255, 255, 0.9), transparent),
+                radial-gradient(1px 1px at 15% 80%, rgba(255, 255, 255, 0.7), transparent),
+                radial-gradient(1px 1px at 85% 15%, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(1px 1px at 55% 35%, rgba(255, 255, 255, 0.9), transparent),
+                radial-gradient(1px 1px at 25% 65%, rgba(255, 255, 255, 0.7), transparent),
+                radial-gradient(1px 1px at 75% 25%, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(1px 1px at 45% 95%, rgba(255, 255, 255, 0.9), transparent),
+                radial-gradient(1px 1px at 95% 55%, rgba(255, 255, 255, 0.7), transparent),
+                radial-gradient(1px 1px at 5% 45%, rgba(255, 255, 255, 0.8), transparent),
+                radial-gradient(1px 1px at 65% 75%, rgba(255, 255, 255, 0.9), transparent),
+                radial-gradient(1px 1px at 35% 5%, rgba(255, 255, 255, 0.7), transparent),
+                radial-gradient(1px 1px at 88% 88%, rgba(255, 255, 255, 0.8), transparent),
+                /* 近处亮星 */
+                radial-gradient(2px 2px at 12% 25%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 38% 55%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 62% 15%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 78% 75%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 22% 88%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 92% 32%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 48% 68%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 68% 42%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 32% 78%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 58% 12%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 82% 58%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 18% 48%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 42% 82%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 72% 28%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 28% 62%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 52% 92%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 88% 18%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 8% 72%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 65% 35%, rgba(255, 255, 255, 1), transparent),
+                radial-gradient(2px 2px at 35% 88%, rgba(255, 255, 255, 1), transparent);
+            background-size: 100% 100%;
+            background-position: 0 0;
+            pointer-events: none;
+            z-index: 0;
+            animation: twinkle 10s ease-in-out infinite;
+            opacity: 0.85;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .main-content {
+            position: relative;
+            min-height: 1200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0;
+        }
+
+        .flower-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            z-index: 2;
+        }
+
+        .flower-svg {
+            width: 100%;
+            height: 100%;
+            filter: drop-shadow(0 0 40px rgba(0, 255, 255, 0.3)) 
+                    drop-shadow(0 0 80px rgba(255, 215, 0, 0.2));
+        }
+
+        /* 中心标题 */
+        .center-title {
+            font-size: 42px;
+            font-weight: 700;
+            fill: url(#titleGradient);
+            text-anchor: middle;
+            dominant-baseline: middle;
+            filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8)) 
+                    drop-shadow(0 0 30px rgba(0, 255, 255, 0.5));
+            animation: titleGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% { opacity: 0.9; }
+            50% { opacity: 1; }
+        }
+
+        /* 花瓣标签 */
+        .petal-label {
+            font-size: 28px;
+            font-weight: 700;
+            fill: #fff;
+            text-anchor: middle;
+            dominant-baseline: middle;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.8)) 
+                    drop-shadow(0 2px 4px rgba(0, 0, 0, 0.8));
+            pointer-events: none;
+        }
+
+        /* 输入区域 */
+        .input-sections {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 1200px;
+        }
+
+        .input-section {
+            position: absolute;
+            width: 280px;
+            min-height: 200px;
+            background: 
+                linear-gradient(135deg, rgba(10, 14, 39, 0.95) 0%, rgba(15, 20, 45, 0.9) 100%);
+            border: 2px solid;
+            border-radius: 16px;
+            padding: 20px;
+            backdrop-filter: blur(15px);
+            box-shadow: 
+                0 8px 32px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.15),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        /* 边框装饰 - 渐变边框和角落光效 */
+        .input-section::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 16px;
+            background: linear-gradient(
+                135deg,
+                currentColor 0%,
+                transparent 25%,
+                transparent 75%,
+                currentColor 100%
+            );
+            opacity: 0.5;
+            z-index: -1;
+            pointer-events: none;
+            animation: borderGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes borderGlow {
+            0%, 100% { opacity: 0.4; }
+            50% { opacity: 0.8; }
+        }
+
+        /* 扫描线效果 */
+        .input-section::after {
+            content: '';
+            position: absolute;
+            top: -100%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                180deg,
+                transparent 0%,
+                rgba(255, 255, 255, 0.1) 50%,
+                transparent 100%
+            );
+            animation: scanLine 3s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes scanLine {
+            0% { top: -100%; }
+            100% { top: 100%; }
+        }
+
+        .input-section[data-section="career"]:hover {
+            transform: translate(-50%, -50%) translateY(-420px) translateY(-5px) scale(1.02);
+            box-shadow: 
+                0 12px 48px rgba(0, 0, 0, 0.6),
+                0 0 40px currentColor,
+                0 0 60px rgba(255, 107, 53, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+            border-width: 2.5px;
+        }
+
+        .input-section[data-section="career"]:hover::before {
+            opacity: 1;
+            animation: borderGlow 1.5s ease-in-out infinite;
+        }
+
+        .input-section[data-section="growth"]:hover {
+            transform: translate(-50%, -50%) rotate(72deg) translateY(-420px) rotate(-72deg) translateY(-5px) scale(1.02);
+            box-shadow: 
+                0 12px 48px rgba(0, 0, 0, 0.6),
+                0 0 40px currentColor,
+                0 0 60px rgba(0, 212, 255, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+            border-width: 2.5px;
+        }
+
+        .input-section[data-section="growth"]:hover::before {
+            opacity: 1;
+            animation: borderGlow 1.5s ease-in-out infinite;
+        }
+
+        .input-section[data-section="health"]:hover {
+            transform: translate(-50%, -50%) rotate(144deg) translateY(-420px) rotate(-144deg) translateY(-5px) scale(1.02);
+            box-shadow: 
+                0 12px 48px rgba(0, 0, 0, 0.6),
+                0 0 40px currentColor,
+                0 0 60px rgba(78, 205, 196, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+            border-width: 2.5px;
+        }
+
+        .input-section[data-section="health"]:hover::before {
+            opacity: 1;
+            animation: borderGlow 1.5s ease-in-out infinite;
+        }
+
+        .input-section[data-section="network"]:hover {
+            transform: translate(-50%, -50%) rotate(216deg) translateY(-420px) rotate(-216deg) translateY(-5px) scale(1.02);
+            box-shadow: 
+                0 12px 48px rgba(0, 0, 0, 0.6),
+                0 0 40px currentColor,
+                0 0 60px rgba(255, 215, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+            border-width: 2.5px;
+        }
+
+        .input-section[data-section="network"]:hover::before {
+            opacity: 1;
+            animation: borderGlow 1.5s ease-in-out infinite;
+        }
+
+        .input-section[data-section="finance"]:hover {
+            transform: translate(-50%, -50%) rotate(288deg) translateY(-420px) rotate(-288deg) translateY(-5px) scale(1.02);
+            box-shadow: 
+                0 12px 48px rgba(0, 0, 0, 0.6),
+                0 0 40px currentColor,
+                0 0 60px rgba(157, 78, 221, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.2),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+            border-width: 2.5px;
+        }
+
+        .input-section[data-section="finance"]:hover::before {
+            opacity: 1;
+            animation: borderGlow 1.5s ease-in-out infinite;
+        }
+
+        .input-section.active {
+            border-width: 3px;
+            box-shadow: 
+                0 0 50px currentColor,
+                0 0 80px currentColor,
+                0 12px 48px rgba(0, 0, 0, 0.6),
+                inset 0 1px 0 rgba(255, 255, 255, 0.25),
+                inset 0 -1px 0 rgba(0, 0, 0, 0.4);
+            z-index: 5;
+        }
+
+        .input-section.active::before {
+            opacity: 1;
+            animation: borderGlow 1s ease-in-out infinite;
+        }
+
+        /* 五个板块的颜色和位置 */
+        .input-section[data-section="career"] {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateY(-420px);
+            border-color: #FF6B35;
+            color: #FF6B35;
+        }
+
+        .input-section[data-section="growth"] {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(72deg) translateY(-420px) rotate(-72deg);
+            border-color: #00D4FF;
+            color: #00D4FF;
+        }
+
+        .input-section[data-section="health"] {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(144deg) translateY(-420px) rotate(-144deg);
+            border-color: #4ECDC4;
+            color: #4ECDC4;
+        }
+
+        .input-section[data-section="network"] {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(216deg) translateY(-420px) rotate(-216deg);
+            border-color: #FFD700;
+            color: #FFD700;
+        }
+
+        .input-section[data-section="finance"] {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) rotate(288deg) translateY(-420px) rotate(-288deg);
+            border-color: #9D4EDD;
+            color: #9D4EDD;
+        }
+
+        .input-section label {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .input-section textarea {
+            flex: 1;
+            width: 100%;
+            min-height: 150px;
+            padding: 15px;
+            background: 
+                linear-gradient(135deg, rgba(0, 0, 0, 0.4) 0%, rgba(5, 10, 25, 0.3) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            color: #e0e0e0;
+            font-family: inherit;
+            font-size: 14px;
+            line-height: 1.6;
+            resize: vertical;
+            transition: all 0.3s ease;
+            box-shadow: 
+                inset 0 2px 4px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        }
+
+        .input-section textarea:focus {
+            outline: none;
+            border-color: currentColor;
+            background: 
+                linear-gradient(135deg, rgba(0, 0, 0, 0.5) 0%, rgba(5, 10, 25, 0.4) 100%);
+            box-shadow: 
+                0 0 20px currentColor,
+                0 0 30px currentColor,
+                inset 0 2px 4px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .input-section textarea::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* 按钮组 */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .btn {
+            padding: 14px 36px;
+            font-size: 16px;
+            font-weight: 600;
+            border: 2px solid;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-save {
+            background: linear-gradient(135deg, #00D4FF, #0099CC);
+            border-color: #00D4FF;
+            color: #fff;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 212, 255, 0.5);
+        }
+
+        .btn-clear {
+            background: rgba(255, 107, 53, 0.1);
+            border-color: #FF6B35;
+            color: #FF6B35;
+        }
+
+        .btn-clear:hover {
+            background: rgba(255, 107, 53, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 107, 53, 0.4);
+        }
+
+        .save-indicator {
+            text-align: center;
+            margin-top: 20px;
+            color: #00D4FF;
+            font-size: 14px;
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            position: relative;
+            z-index: 10;
+        }
+
+        .save-indicator.show {
+            opacity: 1;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1400px) {
+            .flower-container {
+                width: 500px;
+                height: 500px;
+            }
+
+            .input-section {
+                width: 260px;
+            }
+
+            .input-section[data-section="career"],
+            .input-section[data-section="growth"],
+            .input-section[data-section="health"],
+            .input-section[data-section="network"],
+            .input-section[data-section="finance"] {
+                transform: translate(-50%, -50%) translateY(-360px);
+            }
+
+            .input-section[data-section="growth"] {
+                transform: translate(-50%, -50%) rotate(72deg) translateY(-360px) rotate(-72deg);
+            }
+
+            .input-section[data-section="health"] {
+                transform: translate(-50%, -50%) rotate(144deg) translateY(-360px) rotate(-144deg);
+            }
+
+            .input-section[data-section="network"] {
+                transform: translate(-50%, -50%) rotate(216deg) translateY(-360px) rotate(-216deg);
+            }
+
+            .input-section[data-section="finance"] {
+                transform: translate(-50%, -50%) rotate(288deg) translateY(-360px) rotate(-288deg);
+            }
+        }
+
+        @media (max-width: 1200px) {
+            .main-content {
+                min-height: auto;
+                flex-direction: column;
+            }
+
+            .flower-container {
+                position: relative;
+                transform: none;
+                margin: 40px auto;
+                width: 500px;
+                height: 500px;
+            }
+
+            .input-sections {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+                margin-top: 50px;
+                min-height: auto;
+                padding: 0 20px;
+            }
+
+            .input-section {
+                position: static;
+                transform: none !important;
+                width: 100%;
+            }
+
+            .input-section:hover {
+                transform: translateY(-5px) scale(1.01) !important;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+
+            .flower-container {
+                width: 400px;
+                height: 400px;
+            }
+
+            .center-title {
+                font-size: 32px;
+            }
+
+            .petal-label {
+                font-size: 22px;
+            }
+
+            .input-sections {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .input-section {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .flower-container {
+                width: 300px;
+                height: 300px;
+            }
+
+            .center-title {
+                font-size: 24px;
+            }
+
+            .petal-label {
+                font-size: 18px;
+            }
+
+            .input-section {
+                padding: 15px;
+            }
+
+            .input-section label {
+                font-size: 18px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main-content">
+            <div class="flower-container">
+                <svg class="flower-svg" viewBox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <!-- 标题渐变 -->
+                        <linearGradient id="titleGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" style="stop-color:#FFD700;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#00D4FF;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#FFD700;stop-opacity:1" />
+                        </linearGradient>
+
+                        <!-- 事业 - 橙红色渐变 -->
+                        <radialGradient id="petalCareer" cx="50%" cy="0%">
+                            <stop offset="0%" style="stop-color:#FF8C69;stop-opacity:0.95" />
+                            <stop offset="50%" style="stop-color:#FF6B35;stop-opacity:0.9" />
+                            <stop offset="100%" style="stop-color:#E63946;stop-opacity:0.85" />
+                        </radialGradient>
+
+                        <!-- 成长 - 青色渐变 -->
+                        <radialGradient id="petalGrowth" cx="50%" cy="0%">
+                            <stop offset="0%" style="stop-color:#4DD0E1;stop-opacity:0.95" />
+                            <stop offset="50%" style="stop-color:#00D4FF;stop-opacity:0.9" />
+                            <stop offset="100%" style="stop-color:#0097A7;stop-opacity:0.85" />
+                        </radialGradient>
+
+                        <!-- 健康 - 青绿色渐变 -->
+                        <radialGradient id="petalHealth" cx="50%" cy="0%">
+                            <stop offset="0%" style="stop-color:#66E5D8;stop-opacity:0.95" />
+                            <stop offset="50%" style="stop-color:#4ECDC4;stop-opacity:0.9" />
+                            <stop offset="100%" style="stop-color:#26A69A;stop-opacity:0.85" />
+                        </radialGradient>
+
+                        <!-- 人脉 - 金色渐变 -->
+                        <radialGradient id="petalNetwork" cx="50%" cy="0%">
+                            <stop offset="0%" style="stop-color:#FFE082;stop-opacity:0.95" />
+                            <stop offset="50%" style="stop-color:#FFD700;stop-opacity:0.9" />
+                            <stop offset="100%" style="stop-color:#FFA000;stop-opacity:0.85" />
+                        </radialGradient>
+
+                        <!-- 财务 - 紫色渐变 -->
+                        <radialGradient id="petalFinance" cx="50%" cy="0%">
+                            <stop offset="0%" style="stop-color:#C77DFF;stop-opacity:0.95" />
+                            <stop offset="50%" style="stop-color:#9D4EDD;stop-opacity:0.9" />
+                            <stop offset="100%" style="stop-color:#7B2CBF;stop-opacity:0.85" />
+                        </radialGradient>
+
+                        <!-- 边缘光效 -->
+                        <linearGradient id="edgeGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:rgba(255,255,255,0.3);stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:rgba(255,255,255,0.1);stop-opacity:0.5" />
+                            <stop offset="100%" style="stop-color:rgba(255,255,255,0.3);stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+
+                    <!-- 外层光晕 -->
+                    <circle cx="300" cy="300" r="280" fill="none" stroke="url(#titleGradient)" stroke-width="2" opacity="0.2">
+                        <animate attributeName="r" values="280;300;280" dur="4s" repeatCount="indefinite"/>
+                        <animate attributeName="opacity" values="0.2;0.4;0.2" dur="4s" repeatCount="indefinite"/>
+                    </circle>
+
+                    <!-- 中心圆 -->
+                    <circle cx="300" cy="300" r="60" fill="rgba(0, 0, 0, 0.6)" stroke="url(#titleGradient)" stroke-width="3" opacity="0.95">
+                        <animate attributeName="r" values="60;65;60" dur="3s" repeatCount="indefinite"/>
+                    </circle>
+                    <circle cx="300" cy="300" r="50" fill="rgba(10, 14, 39, 0.8)" opacity="0.9"/>
+
+                    <!-- 中心标题 -->
+                    <text x="300" y="300" class="center-title">人生星盘</text>
+
+                    <!-- 五个花瓣 - 莲花形状 -->
+                    <!-- 事业 - 顶部 (0度) -->
+                    <g transform="translate(300,300)">
+                        <path d="M 0,-120 Q -35,-160 -60,-190 Q -35,-220 0,-260 Q 35,-220 60,-190 Q 35,-160 0,-120 Z" 
+                              fill="url(#petalCareer)" 
+                              stroke="url(#edgeGlow)" 
+                              stroke-width="2.5"
+                              opacity="0.95">
+                            <animate attributeName="opacity" values="0.95;1;0.95" dur="3s" repeatCount="indefinite" begin="0s"/>
+                        </path>
+                        <text x="0" y="-180" class="petal-label">事业</text>
+                    </g>
+
+                    <!-- 成长 - 右上 (72度) -->
+                    <g transform="translate(300,300) rotate(72)">
+                        <path d="M 0,-120 Q -35,-160 -60,-190 Q -35,-220 0,-260 Q 35,-220 60,-190 Q 35,-160 0,-120 Z" 
+                              fill="url(#petalGrowth)" 
+                              stroke="url(#edgeGlow)" 
+                              stroke-width="2.5"
+                              opacity="0.95">
+                            <animate attributeName="opacity" values="0.95;1;0.95" dur="3s" repeatCount="indefinite" begin="0.6s"/>
+                        </path>
+                        <text x="0" y="-180" class="petal-label">成长</text>
+                    </g>
+
+                    <!-- 健康 - 右下 (144度) -->
+                    <g transform="translate(300,300) rotate(144)">
+                        <path d="M 0,-120 Q -35,-160 -60,-190 Q -35,-220 0,-260 Q 35,-220 60,-190 Q 35,-160 0,-120 Z" 
+                              fill="url(#petalHealth)" 
+                              stroke="url(#edgeGlow)" 
+                              stroke-width="2.5"
+                              opacity="0.95">
+                            <animate attributeName="opacity" values="0.95;1;0.95" dur="3s" repeatCount="indefinite" begin="1.2s"/>
+                        </path>
+                        <text x="0" y="-180" class="petal-label">健康</text>
+                    </g>
+
+                    <!-- 人脉 - 左下 (216度) -->
+                    <g transform="translate(300,300) rotate(216)">
+                        <path d="M 0,-120 Q -35,-160 -60,-190 Q -35,-220 0,-260 Q 35,-220 60,-190 Q 35,-160 0,-120 Z" 
+                              fill="url(#petalNetwork)" 
+                              stroke="url(#edgeGlow)" 
+                              stroke-width="2.5"
+                              opacity="0.95">
+                            <animate attributeName="opacity" values="0.95;1;0.95" dur="3s" repeatCount="indefinite" begin="1.8s"/>
+                        </path>
+                        <text x="0" y="-180" class="petal-label">人脉</text>
+                    </g>
+
+                    <!-- 财务 - 左上 (288度) -->
+                    <g transform="translate(300,300) rotate(288)">
+                        <path d="M 0,-120 Q -35,-160 -60,-190 Q -35,-220 0,-260 Q 35,-220 60,-190 Q 35,-160 0,-120 Z" 
+                              fill="url(#petalFinance)" 
+                              stroke="url(#edgeGlow)" 
+                              stroke-width="2.5"
+                              opacity="0.95">
+                            <animate attributeName="opacity" values="0.95;1;0.95" dur="3s" repeatCount="indefinite" begin="2.4s"/>
+                        </path>
+                        <text x="0" y="-180" class="petal-label">财务</text>
+                    </g>
+                </svg>
+            </div>
+
+            <!-- 输入区域 -->
+            <div class="input-sections">
+                <div class="input-section" data-section="career">
+                    <label>事业</label>
+                    <textarea 
+                        id="career" 
+                        placeholder="记录今天的工作进展、完成的重要事项..."
+                    ></textarea>
+                </div>
+
+                <div class="input-section" data-section="growth">
+                    <label>成长</label>
+                    <textarea 
+                        id="growth" 
+                        placeholder="记录今天学到的知识、新的感悟和突破..."
+                    ></textarea>
+                </div>
+
+                <div class="input-section" data-section="health">
+                    <label>健康</label>
+                    <textarea 
+                        id="health" 
+                        placeholder="记录今天的身体状态、运动、饮食、睡眠..."
+                    ></textarea>
+                </div>
+
+                <div class="input-section" data-section="network">
+                    <label>人脉</label>
+                    <textarea 
+                        id="network" 
+                        placeholder="记录今天的重要交流、建立的新联系..."
+                    ></textarea>
+                </div>
+
+                <div class="input-section" data-section="finance">
+                    <label>财务</label>
+                    <textarea 
+                        id="finance" 
+                        placeholder="记录今天的财务情况、收支和投资相关事项..."
+                    ></textarea>
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons">
+            <button class="btn btn-save" onclick="saveAll()">保存内容</button>
+            <button class="btn btn-clear" onclick="clearToday()">清空今日内容</button>
+        </div>
+
+        <div class="save-indicator" id="saveIndicator">✓ 已自动保存</div>
+    </div>
+
+    <script>
+        // 获取今天的日期字符串
+        function getTodayKey() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // 保存单个板块内容
+        function saveSection(section) {
+            const key = `${getTodayKey()}_${section}`;
+            const value = document.getElementById(section).value;
+            localStorage.setItem(key, value);
+        }
+
+        // 保存所有内容
+        function saveAll() {
+            const sections = ['career', 'growth', 'health', 'network', 'finance'];
+            sections.forEach(section => {
+                saveSection(section);
+            });
+            showSaveIndicator();
+        }
+
+        // 加载所有内容
+        function loadAll() {
+            const sections = ['career', 'growth', 'health', 'network', 'finance'];
+            sections.forEach(section => {
+                const key = `${getTodayKey()}_${section}`;
+                const value = localStorage.getItem(key);
+                if (value) {
+                    document.getElementById(section).value = value;
+                }
+            });
+        }
+
+        // 清空今日内容
+        function clearToday() {
+            if (confirm('确定要清空今天的所有复盘内容吗？此操作不可恢复。')) {
+                const sections = ['career', 'growth', 'health', 'network', 'finance'];
+                sections.forEach(section => {
+                    const key = `${getTodayKey()}_${section}`;
+                    localStorage.removeItem(key);
+                    document.getElementById(section).value = '';
+                });
+                showSaveIndicator('已清空今日内容');
+            }
+        }
+
+        // 显示保存提示
+        function showSaveIndicator(message = '✓ 已自动保存') {
+            const indicator = document.getElementById('saveIndicator');
+            indicator.textContent = message;
+            indicator.classList.add('show');
+            setTimeout(() => {
+                indicator.classList.remove('show');
+            }, 2000);
+        }
+
+        // 初始化
+        document.addEventListener('DOMContentLoaded', function() {
+            // 加载保存的内容
+            loadAll();
+            
+            // 为每个输入框添加自动保存事件
+            const sections = ['career', 'growth', 'health', 'network', 'finance'];
+            sections.forEach(section => {
+                const textarea = document.getElementById(section);
+                let saveTimeout;
+                
+                textarea.addEventListener('input', function() {
+                    clearTimeout(saveTimeout);
+                    saveTimeout = setTimeout(() => {
+                        saveSection(section);
+                        showSaveIndicator();
+                    }, 1000); // 1秒后自动保存
+                });
+
+                // 聚焦时高亮对应的输入区域
+                textarea.addEventListener('focus', function() {
+                    document.querySelectorAll('.input-section').forEach(s => {
+                        s.classList.remove('active');
+                    });
+                    document.querySelector(`.input-section[data-section="${section}"]`).classList.add('active');
+                });
+
+                // 失去焦点时保存
+                textarea.addEventListener('blur', function() {
+                    saveSection(section);
+                    document.querySelector(`.input-section[data-section="${section}"]`).classList.remove('active');
+                });
+            });
+
+            // 点击花瓣时聚焦对应的输入框
+            document.querySelectorAll('.flower-svg g[transform*="translate(300,300)"]').forEach((petal, index) => {
+                petal.addEventListener('click', function() {
+                    const sectionOrder = ['career', 'growth', 'health', 'network', 'finance'];
+                    const section = sectionOrder[index];
+                    const textarea = document.getElementById(section);
+                    const inputSection = document.querySelector(`.input-section[data-section="${section}"]`);
+                    
+                    // 高亮对应的输入区域
+                    document.querySelectorAll('.input-section').forEach(s => {
+                        s.classList.remove('active');
+                    });
+                    inputSection.classList.add('active');
+                    
+                    // 滚动到输入区域并聚焦
+                    if (window.innerWidth <= 1200) {
+                        inputSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        setTimeout(() => {
+                            textarea.focus();
+                        }, 500);
+                    } else {
+                        setTimeout(() => {
+                            textarea.focus();
+                        }, 100);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
